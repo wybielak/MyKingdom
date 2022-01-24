@@ -1,17 +1,14 @@
 #include <iostream>
 #include <conio.h>
-#include <cstdlib>
 #include <iomanip>
 #include <windows.h>
-#include <algorithm>
 #include <fstream>
 #include <string>
-#include <ctime>
 
 
 using namespace std;
 
-void hideCursor()
+void hideCursor() // funkcja ukrywająca migający kursor
 {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO info;
@@ -20,7 +17,7 @@ void hideCursor()
     SetConsoleCursorInfo(consoleHandle, &info);
 }
 
-void showCursor()
+void showCursor() // funkcja włączjąca migający kursor (domyślna w konsoli)
 {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO info;
@@ -53,7 +50,7 @@ int arrowSupport(unsigned char keyboard_char) // funkcja do obslugi strzalek
 	return 8;
 }
 
-void MyKingdomTXT()
+void MyKingdomTXT() // napis z menu
 {
 	cout<<endl
 		<<"                                                                                                      @   @   @   @  "<<endl
@@ -73,7 +70,7 @@ void MyKingdomTXT()
 		<<"                     @&@#@&                                       *(*@&&@*                                           "<<endl<<endl<<endl;
 }
 
-void buildAnim(string item_name)
+void buildAnim(string item_name) // animacja budowania
 {
 	int time=500;
 	int n=3;
@@ -108,7 +105,7 @@ void buildAnim(string item_name)
 	cout.width(90/2); cout<<" "; system("pause");
 }
 
-void armyAnim(string item_name)
+void armyAnim(string item_name) // animacja rekrutowania jednostek
 {
 	int time=500;
 	int n=3;
@@ -145,7 +142,7 @@ void armyAnim(string item_name)
 	cout.width(90/2); cout<<" "; system("pause");
 }
 
-void warAnim()
+void warAnim() // animacja bitwy
 {
 	int time=500;
 	int n=3;
@@ -195,7 +192,7 @@ struct Storage
 	int wood;
 };
 
-struct City 
+struct City //glowna struktura
 {
 	string character_name;
 	string name;
@@ -368,12 +365,12 @@ void gameMenu(int menu_select, City* city, HANDLE handle) // menu wioski
 	Sleep(1);
 	system("cls");
 
-	time_t theTime = time(NULL);
-	struct tm *aTime = localtime(&theTime);
+	time_t theTime = time(NULL); // pobieranie aktualnej godziny
+	struct tm *aTime = localtime(&theTime); //
 	
-	int hour=aTime->tm_hour;
-	int min=aTime->tm_min;
-
+	int hour=aTime->tm_hour; //
+	int min=aTime->tm_min; //
+	// wypisywanie menu w ladny sposób, tutaj brzydko ale w grze ladnie
 	SetConsoleTextAttribute ( handle , 8) ; cout<<"Profile: "<<city->character_name<<endl; SetConsoleTextAttribute ( handle , 7) ;
 	SetConsoleTextAttribute ( handle , 2) ; for(int i=0; i<48; i++) cout<<"-";
 	cout<<"----+ YourKingdom +----"; for(int i=0; i<49; i++) cout<<"-"; cout<<endl;
@@ -649,7 +646,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 							trading_menu_i--;
 						}
 
-						if (arrow_num==9 & trading_menu_i==0) //grain
+						if (arrow_num==9 & trading_menu_i==0) //zboze
 						{
 							if (city->money-10>=0)
 							{
@@ -663,7 +660,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 							}
 						}
 
-						if (arrow_num==9 & trading_menu_i==1) //stone
+						if (arrow_num==9 & trading_menu_i==1) //kamien
 						{
 							if (city->money-20>=0)
 							{
@@ -677,7 +674,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 							}
 						}
 
-						if (arrow_num==9 & trading_menu_i==2) //wood
+						if (arrow_num==9 & trading_menu_i==2) //drewno
 						{
 							if (city->money-15>=0)
 							{
@@ -719,7 +716,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 							trading_menu_i--;
 						}
 
-						if (arrow_num==9 & trading_menu_i==0) //grain
+						if (arrow_num==9 & trading_menu_i==0) //zboze
 						{
 							if(city->storage.grain-15>=0)
 							{
@@ -733,7 +730,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 							}
 						}
 
-						if (arrow_num==9 & trading_menu_i==1) //stone
+						if (arrow_num==9 & trading_menu_i==1) //kamien
 						{
 							if (city->storage.stone-10>=0)
 							{
@@ -747,7 +744,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 							}
 						}
 
-						if (arrow_num==9 & trading_menu_i==2) //wood
+						if (arrow_num==9 & trading_menu_i==2) //drewno
 						{
 							if (city->storage.wood-10>=0)
 							{
@@ -761,7 +758,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 							}
 						}
 
-						if (arrow_num==9 & trading_menu_i==3) trading_menu_test=false;
+						if (arrow_num==9 & trading_menu_i==3) trading_menu_test=false; 
 
 						tradingMenu(trading_menu_i, city, "Sell", handle);
 					}
@@ -771,7 +768,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 
 				}
 
-				if (arrow_num==9 & trade_menu_i==2) trade_menu_test=false;
+				if (arrow_num==9 & trade_menu_i==2) trade_menu_test=false; // wyjscie z menu handlu
 
 				tradeMenu(trade_menu_i, city);
 			}
@@ -809,7 +806,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 					war_menu_i--;
 				}
 
-				if (arrow_num==9 & war_menu_i==0)
+				if (arrow_num==9 & war_menu_i==0) // łatwe bitwy
 				{
 					Sleep(1);
 					system ("cls");
@@ -851,7 +848,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 					}
 				}
 
-				if (arrow_num==9 & war_menu_i==1)
+				if (arrow_num==9 & war_menu_i==1) // normalne bitwy
 				{
 					Sleep(1);
 					system ("cls");
@@ -893,7 +890,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 					}
 				}
 
-				if (arrow_num==9 & war_menu_i==2)
+				if (arrow_num==9 & war_menu_i==2) // trudne bitwy
 				{
 					Sleep(1);
 					system ("cls");
@@ -935,7 +932,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 					}
 				}
 
-				if (arrow_num==9 & war_menu_i==3)
+				if (arrow_num==9 & war_menu_i==3) // legendarne bitwy
 				{
 					Sleep(1);
 					system ("cls");
@@ -977,7 +974,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 					}
 				}
 
-				if (arrow_num==9 & war_menu_i==4) war_menu_test = false;
+				if (arrow_num==9 & war_menu_i==4) war_menu_test = false; // wyjscie z bitew
 
 				warMenu(war_menu_i, city);
 			}
@@ -989,7 +986,7 @@ void game(City* city, HANDLE handle) // funkcja z grą
 		if (arrow_num==9 & game_menu_i==10)
 		{
 			saveGame(city);
-			game_menu_test=false; // wyjscie
+			game_menu_test=false; // wyjscie do menu save
 		}
 		gameMenu(game_menu_i, city, handle);
 	}
@@ -1050,7 +1047,12 @@ int main()
 		{
 			Sleep(1);
 			system("cls");
-			cout<<"instruction"<<endl;
+			cout<<"Play the role of a king and rule your own city!"<<endl;
+			cout<<"Use the arrows to move between different game options."<<endl;
+			cout<<"Build houses, recruit troops, trade or start war campaign"<<endl;
+			cout<<"Make sure you have enough troops to start a war campaign (army more than 50, morals more than 10)"<<endl;
+			cout<<"Play wisely and don't bankrupt your village."<<endl;
+			cout<<"The game make autosave when you enter the second menu."<<endl<<endl;
 			system("pause");
 		}
 
@@ -1058,8 +1060,10 @@ int main()
 		{
 			Sleep(1);
 			system("cls");
-			cout<<"wybielak"<<endl;
-			system("pause");
+			MyKingdomTXT();
+			cout.width(150/2); cout<<"Dawid Nowakowski gr.4 lab.8"<<endl;
+			SetConsoleTextAttribute ( handle , 2) ;cout.width(135/2); cout<<"aka. wybielak"<<endl<<endl;SetConsoleTextAttribute ( handle , 7) ;
+			cout.width(90/2); cout<<" "; system("pause");
 		}
 
 		if (arrow_num==9 & main_menu_i==0)
@@ -1103,22 +1107,40 @@ int main()
 				if (arrow_num==9 & second_menu_i==0) // nowa gra
 				{
 					cin.sync();
-					Sleep(1);
-					system("cls");
+					clearCityData(city); // dialog z poczatku gry
 
-					MyKingdomTXT(); showCursor(); clearCityData(city); // dialog z poczatku gry
+					do // ograniczenie pola wpisywania do 16 znaków, wyklucznenie wpisania pustego imienia albo spacji / 16 znaków bo tyle ma moje imie i nazwisko ze spacją (Dawid Nowakowski)
+					{
+						Sleep(1);
+						system("cls");
+						MyKingdomTXT();
+						showCursor(); 
 
-					cout.width(170/2); cout<<"(Stranger) Hello, what's your name traveller? "<<endl;
-					SetConsoleTextAttribute ( handle , 2) ; cout.width(100/2); cout<<"(You) ";
-					getline(cin, city->character_name); hideCursor(); SetConsoleTextAttribute ( handle , 7);
+						cout.width(170/2); cout<<"(Stranger) Hello, what's your name traveller? "<<endl;
+						SetConsoleTextAttribute ( handle , 2) ; cout.width(100/2); cout<<"(You) ";
+						getline(cin, city->character_name); hideCursor(); SetConsoleTextAttribute ( handle , 7);
+						
+						cin.sync(); cout<<endl;
+
+					} while(city->character_name=="" || city->character_name==" " || city->character_name.length()>16) ;
+
+					do // ograniczenie pola wpisywania do 30 znaków, wyklucznenie wpisania pustej nazwy albo spacji / bo tyle ma najdłuższa nazwa miejscowości w polsce (Przedmieście Szczebrzeszyńskie)
+					{
+						Sleep(1);
+						system("cls");
+						MyKingdomTXT();
+						showCursor();
+
+						cout.width(100/2); cout<<"(Stranger) "<<city->character_name<<", you are king now."<<endl; 
+						cout.width(177/2); cout<<"(Stranger) Tell me, how will you name your city? "<<endl; 
+						SetConsoleTextAttribute ( handle , 2) ; cout.width(100/2); cout<<"(You) ";
+						getline(cin, city->name); hideCursor(); SetConsoleTextAttribute ( handle , 7);
+
+						cin.sync(); cout<<endl;
+
+					} while (city->name=="" || city->name==" " || city->name.length()>30) ;
 					
-					cin.sync(); cout<<endl;
-					
-					cout.width(100/2); cout<<"(Stranger) "<<city->character_name<<", you are king now."<<endl; Sleep(1 * CLOCKS_PER_SEC);
-					cout.width(177/2); cout<<"(Stranger) Tell me, how will you name your city? "<<endl; showCursor();
-					SetConsoleTextAttribute ( handle , 2) ; cout.width(100/2); cout<<"(You) ";
-					getline(cin, city->name); hideCursor(); SetConsoleTextAttribute ( handle , 7);
-				
+					Sleep(1 * CLOCKS_PER_SEC);
 					cout<<endl;
 
 					cout.width(169/2); cout<<"(Stranger) Ohh, I forgot to introduce myself,"<<endl; Sleep(1 * CLOCKS_PER_SEC);
@@ -1128,7 +1150,8 @@ int main()
 
 					cout<<endl;
 
-					cout.width(100/2); cout<<"(Proventus) "<<city->character_name<<" I think "<<city->name<<" is very good name."<<endl; Sleep(1 * CLOCKS_PER_SEC);
+					cout.width(100/2); cout<<"(Proventus) "<<city->character_name<<" I think "<<endl;
+					cout.width(160/2); cout<<city->name<<" is very good name."<<endl; Sleep(1 * CLOCKS_PER_SEC);
 					cout.width(135/2); cout<<"(Proventus) At start we have "<<city->money<<" gold money."<<endl; Sleep(1 * CLOCKS_PER_SEC);
 					SetConsoleTextAttribute ( handle , 2) ; cout.width(205/2); cout<<"(You) It's kind of weird that I became king, but so it be."; SetConsoleTextAttribute ( handle , 7);
 					SetConsoleTextAttribute ( handle , 2) ; cout.width(165/2); cout<<"(You) Let's started!"<<endl; SetConsoleTextAttribute ( handle , 7);
