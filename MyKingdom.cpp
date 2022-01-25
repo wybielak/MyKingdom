@@ -1150,8 +1150,7 @@ int main()
 
 					cout<<endl;
 
-					cout.width(100/2); cout<<"(Proventus) "<<city->character_name<<" I think "<<endl;
-					cout.width(160/2); cout<<city->name<<" is very good name."<<endl; Sleep(1 * CLOCKS_PER_SEC);
+					cout.width(100/2); cout<<"(Proventus) "<<city->character_name<<" I think "<<city->name<<" is very good name."<<endl; Sleep(1 * CLOCKS_PER_SEC);
 					cout.width(135/2); cout<<"(Proventus) At start we have "<<city->money<<" gold money."<<endl; Sleep(1 * CLOCKS_PER_SEC);
 					SetConsoleTextAttribute ( handle , 2) ; cout.width(205/2); cout<<"(You) It's kind of weird that I became king, but so it be."; SetConsoleTextAttribute ( handle , 7);
 					SetConsoleTextAttribute ( handle , 2) ; cout.width(165/2); cout<<"(You) Let's started!"<<endl; SetConsoleTextAttribute ( handle , 7);
